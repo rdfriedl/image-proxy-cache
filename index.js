@@ -79,6 +79,6 @@ app.get("/", async (req, res) => {
 app.listen(3000);
 console.log("started server on 3000");
 
-process.on("exit", () => {
-	app.close();
-});
+process.on('SIGINT', () => {
+	process.exit();
+})
