@@ -1,8 +1,9 @@
 {
   "name": "image-proxy-cache",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple http server that proxies images and caches them",
   "main": "index.js",
+  "bin": "./index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "test": "echo no tests"
