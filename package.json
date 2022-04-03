@@ -1,13 +1,14 @@
 {
-  "name": "image-proxy-cache",
+  "name": "@rdfriedl/image-proxy-cache",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple http server that proxies images and caches them",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "echo no tests"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.26.1",
     "express": "^5.0.0-beta.1"
