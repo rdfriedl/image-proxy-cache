@@ -5,6 +5,21 @@ const axios = require("axios");
 const crypto = require("crypto");
 const express = require("express");
 
+const userAgent =
+	"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.88 Safari/537.36";
+const fetchImage = async (imageUrl) => {
+	return Promise.race([
+		axios.get(imageUrl, {
+			responseType: "arraybuffer",
+			headers: { "user-agent": userAgent },
+		}),
+		axios.get("https://images.weserv.nl?url=" + encodeURIComponent(imageUrl), {
+			responseType: "arraybuffer",
+			headers: { "user-agent": userAgent },
+		}),
+	]);
+};
+
 const cachePathEnv = process.env.CACHE_DIR || "./cache";
 const cacheDir = path.isAbsolute(cachePathEnv)
 	? cachePathEnv
@@ -46,20 +61,14 @@ app.get("/", async (req, res) => {
 	}
 
 	console.log(`Fetching ${imageUrl}`);
-	const imageRes = await axios.get(imageUrl, {
-		responseType: "arraybuffer",
-		headers: {
-			"user-agent":
-				"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.88 Safari/537.36",
-		},
-	});
+	const imageRes = await fetchImage(imageUrl);
 
 	if (!imageRes.headers["content-type"].includes("image")) {
 		throw new Error("the url must point to an image");
 	}
 
 	const headers = {
-		"content-type": imageRes.headers["content-type"]
+		"content-type": imageRes.headers["content-type"],
 	};
 	const metadata = { headers };
 
@@ -78,6 +87,6 @@ app.get("/", async (req, res) => {
 app.listen(3000);
 console.log("started server on 3000");
 
-process.on('SIGINT', () => {
+process.on("SIGINT", () => {
 	process.exit();
-})
+});
