@@ -59,8 +59,7 @@ app.get("/", async (req, res) => {
 	}
 
 	const headers = {
-		"content-type": imageRes.headers["content-type"],
-		"content-length": imageRes.headers["content-length"],
+		"content-type": imageRes.headers["content-type"]
 	};
 	const metadata = { headers };
 
