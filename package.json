@@ -1,5 +1,5 @@
 {
-  "name": "@rdfriedl/image-proxy-cache",
+  "name": "image-proxy-cache",
   "version": "1.0.0",
   "description": "A simple http server that proxies images and caches them",
   "main": "index.js",
