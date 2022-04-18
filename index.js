@@ -52,7 +52,7 @@ app.get("/", async (req, res) => {
     throw new Error("missing url param");
   }
 
-  const imageUrl = req.query.url;
+  const imageUrl = decodeURIComponent(req.query.url);
   const hash = crypto.createHash("md5").update(imageUrl).digest("hex");
   const metadataPath = path.join(cacheDir, hash + ".json");
   const cachePath = path.join(cacheDir, hash);
