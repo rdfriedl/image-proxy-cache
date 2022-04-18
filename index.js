@@ -42,6 +42,11 @@ const fetchImage = async (imageUrl) => {
   });
 };
 
+const decodeUrl = (url) => {
+  const decoded = decodeURIComponent(url);
+  return decoded === url ? url : decodeUrl(decoded);
+}
+
 const cachePathEnv = process.env.CACHE_DIR || "./cache";
 const cacheDir = path.isAbsolute(cachePathEnv) ? cachePathEnv : path.join(process.cwd(), cachePathEnv);
 
@@ -52,7 +57,7 @@ app.get("/", async (req, res) => {
     throw new Error("missing url param");
   }
 
-  const imageUrl = decodeURIComponent(req.query.url);
+  const imageUrl = decodeUrl(req.query.url);
   const hash = crypto.createHash("md5").update(imageUrl).digest("hex");
   const metadataPath = path.join(cacheDir, hash + ".json");
   const cachePath = path.join(cacheDir, hash);
